@@ -6,7 +6,7 @@ now-playing UI, full queue management, Spotify link support, lyrics, and
 an owner control panel. Built async, modular, and production-ready for
 Railway.
 
-- Bot: `@hel1xanya_bot`
+- Bot: `@hel1xanyaa_bot`
 - Stack: Python 3.11+, Pyrogram, PyTgCalls, Pillow, aiohttp
 
 ---
