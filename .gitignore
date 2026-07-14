@@ -1,0 +1,26 @@
+# Environment & secrets
+.env
+*.session
+*.session-journal
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+venv/
+*.egg-info/
+
+# Runtime artefacts
+cache/*.json
+cache/*.png
+cache/*.session*
+logs/*.log
+logs/*.log.*
+!cache/.gitkeep
+!logs/.gitkeep
+
+# OS / editor
+.DS_Store
+.idea/
+.vscode/
