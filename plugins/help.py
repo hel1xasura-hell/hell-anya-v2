@@ -22,6 +22,12 @@ _HELP_TEXT = f"""
 `/download <query|link>` — send the actual audio file into the chat
 `/save <link>` — download an Instagram/TikTok/Twitter/etc. video into the chat
 
+**Translate**
+`/tr uzb <text>` — translate to Uzbek
+`/tr eng <text>` — translate to English
+`/tr ind <text>` — translate to Indonesian
+(reply to a message with just `/tr <lang>` to translate it)
+
 **Info**
 `/lyrics [artist - title]`
 `/settings`
@@ -39,3 +45,4 @@ group administrator permissions.
 @restrict_to_group
 async def help_command(client: Client, message: Message) -> None:
     await message.reply_text(_HELP_TEXT)
+    
