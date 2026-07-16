@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ᴀɴʏᴀ — control room</title>
+<link rel="icon" href="data:,">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- ============ LOGIN SCREEN ============ -->
+<section id="login-screen" class="login-screen">
+  <div class="login-card">
+    <div class="login-mark">
+      <span class="pulse-dot" id="login-pulse"></span>
+      <span class="login-mark-text">ᴀɴʏᴀ</span>
+    </div>
+    <p class="login-sub">control room</p>
+
+    <form id="login-form" autocomplete="off">
+      <label class="field">
+        <span>server url</span>
+        <input type="text" id="server-url" placeholder="https://your-app.up.railway.app" required>
+      </label>
+      <label class="field">
+        <span>username</span>
+        <input type="text" id="username" autocomplete="username" required>
+      </label>
+      <label class="field">
+        <span>password</span>
+        <input type="password" id="password" autocomplete="current-password" required>
+      </label>
+      <button type="submit" id="login-btn">connect</button>
+      <p class="login-error" id="login-error"></p>
+    </form>
+  </div>
+</section>
+
+<!-- ============ DASHBOARD ============ -->
+<div id="app" class="app hidden">
+
+  <aside class="sidebar">
+    <div class="brand">
+      <span class="pulse-dot" id="status-dot"></span>
+      <span class="brand-text">ᴀɴʏᴀ</span>
+    </div>
+    <nav class="nav">
+      <button class="nav-item active" data-view="overview">overview</button>
+      <button class="nav-item" data-view="queue">now playing</button>
+      <button class="nav-item" data-view="controls">controls</button>
+      <button class="nav-item" data-view="users">users</button>
+      <button class="nav-item" data-view="commands">commands</button>
+      <button class="nav-item" data-view="logs">logs</button>
+      <button class="nav-item" data-view="broadcast">broadcast</button>
+    </nav>
+    <div class="sidebar-foot">
+      <div class="who" id="who-am-i"></div>
+      <button class="logout-btn" id="logout-btn">disconnect</button>
+    </div>
+  </aside>
+
+  <main class="main">
+
+    <!-- OVERVIEW -->
+    <section class="view active" id="view-overview">
+      <header class="view-head">
+        <h1>overview</h1>
+        <button class="ghost-btn refresh-btn" data-refresh="overview">refresh</button>
+      </header>
+      <div class="stat-grid">
+        <div class="stat-card">
+          <span class="stat-label">voice engine</span>
+          <span class="stat-value" id="stat-voice">—</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-label">total plays</span>
+          <span class="stat-value" id="stat-plays">—</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-label">queue length</span>
+          <span class="stat-value" id="stat-queue">—</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-label">uptime</span>
+          <span class="stat-value" id="stat-uptime">—</span>
+        </div>
+      </div>
+
+      <div class="panel-row">
+        <div class="panel">
+          <h2>top tracks</h2>
+          <ol class="rank-list" id="top-tracks"></ol>
+        </div>
+        <div class="panel">
+          <h2>top listeners</h2>
+          <ol class="rank-list" id="top-users"></ol>
+        </div>
+      </div>
+    </section>
+
+    <!-- QUEUE / NOW PLAYING -->
+    <section class="view" id="view-queue">
+      <header class="view-head">
+        <h1>now playing</h1>
+        <button class="ghost-btn refresh-btn" data-refresh="queue">refresh</button>
+      </header>
+
+      <div class="now-playing-card" id="now-playing-card">
+        <p class="empty-note">Nothing is playing right now.</p>
+      </div>
+
+      <h2 class="sub-h">up next</h2>
+      <ol class="queue-list" id="queue-list"></ol>
+    </section>
+
+    <!-- CONTROLS -->
+    <section class="view" id="view-controls">
+      <header class="view-head">
+        <h1>controls</h1>
+      </header>
+
+      <div class="controls-grid">
+        <button class="control-btn" data-action="pause">⏸ pause</button>
+        <button class="control-btn" data-action="resume">▶ resume</button>
+        <button class="control-btn" data-action="skip">⏭ skip</button>
+        <button class="control-btn" data-action="replay">🔁 replay</button>
+        <button class="control-btn" data-action="shuffle">🔀 shuffle</button>
+        <button class="control-btn" data-action="clearqueue">🧹 clear queue</button>
+        <button class="control-btn danger" data-action="stop">⏹ stop</button>
+      </div>
+
+      <div class="panel-row">
+        <div class="panel">
+          <h2>volume</h2>
+          <div class="slider-row">
+            <input type="range" min="0" max="200" value="100" id="volume-slider">
+            <span id="volume-value">100%</span>
+          </div>
+          <button class="ghost-btn" id="volume-apply">set volume</button>
+        </div>
+
+        <div class="panel">
+          <h2>loop mode</h2>
+          <div class="loop-options">
+            <button class="chip" data-loop="off">off</button>
+            <button class="chip" data-loop="track">track</button>
+            <button class="chip" data-loop="queue">queue</button>
+          </div>
+        </div>
+
+        <div class="panel">
+          <h2>remove from queue</h2>
+          <div class="slider-row">
+            <input type="number" min="1" id="remove-position" placeholder="position #">
+            <button class="ghost-btn" id="remove-apply">remove</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel danger-zone">
+        <h2>danger zone</h2>
+        <p class="danger-copy">Restarts the bot process. Voice playback and all connections drop briefly.</p>
+        <button class="control-btn danger" id="restart-btn">restart bot</button>
+      </div>
+    </section>
+
+    <!-- USERS -->
+    <section class="view" id="view-users">
+      <header class="view-head">
+        <h1>known users</h1>
+        <button class="ghost-btn refresh-btn" data-refresh="users">refresh</button>
+      </header>
+      <div class="table-wrap">
+        <table class="data-table" id="users-table">
+          <thead>
+            <tr><th>name</th><th>username</th><th>user id</th><th>commands run</th><th>first seen</th><th>last seen</th></tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- COMMANDS / AUDIT LOG -->
+    <section class="view" id="view-commands">
+      <header class="view-head">
+        <h1>command history</h1>
+        <button class="ghost-btn refresh-btn" data-refresh="commands">refresh</button>
+      </header>
+      <div class="table-wrap">
+        <table class="data-table" id="commands-table">
+          <thead>
+            <tr><th>time</th><th>source</th><th>user</th><th>command</th></tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+      <button class="ghost-btn" id="commands-more">load more</button>
+    </section>
+
+    <!-- LOGS -->
+    <section class="view" id="view-logs">
+      <header class="view-head">
+        <h1>raw logs</h1>
+        <button class="ghost-btn refresh-btn" data-refresh="logs">refresh</button>
+      </header>
+      <pre class="log-view" id="log-view">—</pre>
+    </section>
+
+    <!-- BROADCAST -->
+    <section class="view" id="view-broadcast">
+      <header class="view-head">
+        <h1>broadcast</h1>
+      </header>
+      <div class="panel">
+        <p class="danger-copy">Sends a message straight into the group chat, from the bot.</p>
+        <textarea id="broadcast-text" rows="5" placeholder="Message to send to the group..."></textarea>
+        <button class="control-btn" id="broadcast-send">send to group</button>
+        <p class="login-error" id="broadcast-status"></p>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script src="app.js"></script>
+</body>
+</html>
