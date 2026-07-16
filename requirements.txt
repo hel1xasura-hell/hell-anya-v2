@@ -1,0 +1,20 @@
+# NOTE: the original "pyrogram" package was archived by its author in Dec 2024
+# (final release 2.0.106) and is missing error classes newer py-tgcalls releases
+# require (e.g. GroupcallForbidden). Kurigram is an actively maintained,
+# drop-in-compatible fork — it installs under the same `pyrogram` import
+# namespace, so no application code needs to change.
+kurigram==2.2.23
+tgcrypto==1.2.5
+py-tgcalls==2.3.3
+yt-dlp[default]==2026.7.4
+yt-dlp-ejs==0.8.0
+Pillow==10.4.0
+aiohttp==3.10.11
+python-dotenv==1.0.1
+rich==13.9.4
+deep-translator==1.11.4
+
+# --- Web dashboard API (web/) ---
+fastapi==0.115.6
+uvicorn[standard]==0.34.0
+pydantic==2.10.4
